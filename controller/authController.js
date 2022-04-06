@@ -22,7 +22,7 @@ const createSendToken = (user, statusCode, res) => {
   };
   if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
   res.cookie('jwt', token, cookieOptions);
-  console.log(user);
+  // console.log(user);
   user.password = undefined;
   res.status(statusCode).json({
     status: 'success',
@@ -92,6 +92,30 @@ exports.protect = catchAsync(async (req, res, next) => {
     );
   }
   req.user = currentUser;
+  next();
+});
+
+exports.isLoggedin = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    //1) verify token
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+    // 2) check if user still exists
+    const currentUser = await User.findById(decoded.id);
+    if (!currentUser) {
+      return next();
+    }
+    // 3) Check if user changed password after the token was issued
+    if (currentUser.changedPassworedAfter(decoded.iat)) {
+      return next();
+    }
+    //There is A logged IN USER
+    res.locals.user = currentUser;
+    return next();
+  }
+
   next();
 });
 

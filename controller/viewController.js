@@ -24,6 +24,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
 });
 exports.getLoginForm = (req, res) => {
   res.status(200).render('login', {
-    tilte: 'login into your account'
+    title: 'login into your account'
   });
 };
