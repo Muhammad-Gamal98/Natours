@@ -3,9 +3,15 @@ const viewsController = require('../controller/viewController');
 const authController = require('../controller/authController');
 
 const router = express.Router();
-router.use(authController.isLoggedin);
-router.get('/', viewsController.getOverview);
-router.get('/tour/:slug', viewsController.getTour);
-router.get('/login', viewsController.getLoginForm);
+
+router.get('/', authController.isLoggedin, viewsController.getOverview);
+router.get('/tour/:slug', authController.isLoggedin, viewsController.getTour);
+router.get('/login', authController.isLoggedin, viewsController.getLoginForm);
+router.get('/me', authController.protect, viewsController.getAccount);
+// router.post(
+//   '/submit-user-data',
+//   authController.protect,
+//   viewsController.updateUserData
+// );
 
 module.exports = router;
