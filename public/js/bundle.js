@@ -8866,7 +8866,7 @@ var login = /*#__PURE__*/function () {
             _context.next = 4;
             return (0, _axios.default)({
               method: 'POST',
-              url: '/api/v1/users/login',
+              url: 'http://localhost:3000/api/v1/users/login',
               data: {
                 email: email,
                 password: password
@@ -8918,7 +8918,7 @@ var logout = /*#__PURE__*/function () {
             _context2.next = 3;
             return (0, _axios.default)({
               method: 'GET',
-              url: '/api/v1/users/logout'
+              url: 'http://localhost:3000/api/v1/users/logout'
             });
 
           case 3:
@@ -8971,7 +8971,7 @@ var updateSettings = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            url = type === 'password' ? '/api/v1/users/updatemypassword' : '/api/v1/users/updateMe';
+            url = type === 'password' ? 'http://localhost:3000/api/v1/users/updatemypassword' : 'http://localhost:3000/api/v1/users/updateMe';
             _context.prev = 1;
             _context.next = 4;
             return (0, _axios.default)({
