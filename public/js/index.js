@@ -14,7 +14,6 @@ const bookBtn = document.getElementById('book-tour');
 
 if (mapBox) {
   const locations = JSON.parse(mapBox.dataset.locations);
-  console.log(locations);
   displayMap(locations);
 }
 if (loginForm) {
@@ -62,7 +61,6 @@ if (userPasswordForm) {
   });
 }
 if (bookBtn) {
-  console.log(bookBtn);
   bookBtn.addEventListener('click', e => {
     e.target.textContent = 'Processing...';
     const { tourId } = e.target.dataset;

@@ -22,5 +22,11 @@ const bookingSchema = mongoose.Schema(
 
   { timestamps: true }
 );
+bookingSchema.pre(/^find/, function(next) {
+  this.populate('user').populate({
+    path: 'tour',
+    select: 'name'
+  });
+});
 const booking = mongoose.model('booking', bookingSchema);
 module.exports = booking;

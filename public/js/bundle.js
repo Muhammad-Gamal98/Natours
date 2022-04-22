@@ -9361,7 +9361,6 @@ var bookBtn = document.getElementById('book-tour');
 
 if (mapBox) {
   var locations = JSON.parse(mapBox.dataset.locations);
-  console.log(locations);
   (0, _mapBox.displayMap)(locations);
 }
 
@@ -9431,7 +9430,6 @@ if (userPasswordForm) {
 }
 
 if (bookBtn) {
-  console.log(bookBtn);
   bookBtn.addEventListener('click', function (e) {
     e.target.textContent = 'Processing...';
     var tourId = e.target.dataset.tourId;
@@ -9466,7 +9464,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62667" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50929" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
