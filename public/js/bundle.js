@@ -8861,9 +8861,8 @@ var login = /*#__PURE__*/function () {
       while (1) {
         switch (_context.prev = _context.next) {
           case 0:
-            console.log(email, password);
-            _context.prev = 1;
-            _context.next = 4;
+            _context.prev = 0;
+            _context.next = 3;
             return (0, _axios.default)({
               method: 'POST',
               url: 'http://localhost:3000/api/v1/users/login',
@@ -8873,7 +8872,7 @@ var login = /*#__PURE__*/function () {
               }
             });
 
-          case 4:
+          case 3:
             res = _context.sent;
 
             if (res.data.status === 'success') {
@@ -8884,20 +8883,20 @@ var login = /*#__PURE__*/function () {
             }
 
             console.log(res);
-            _context.next = 12;
+            _context.next = 11;
             break;
 
-          case 9:
-            _context.prev = 9;
-            _context.t0 = _context["catch"](1);
+          case 8:
+            _context.prev = 8;
+            _context.t0 = _context["catch"](0);
             (0, _alert.showAlert)('error', _context.t0.response.data.message);
 
-          case 12:
+          case 11:
           case "end":
             return _context.stop();
         }
       }
-    }, _callee, null, [[1, 9]]);
+    }, _callee, null, [[0, 8]]);
   }));
 
   return function login(_x, _x2) {
@@ -8923,7 +8922,8 @@ var logout = /*#__PURE__*/function () {
 
           case 3:
             res = _context2.sent;
-            if (res.data.status = 'success') location.reload(true);
+            if (res.data.status = 'success') location.assign('/'); //location.reload(true);
+
             _context2.next = 10;
             break;
 
@@ -9383,8 +9383,8 @@ if (userDataForm) {
     var form = new FormData();
     form.append('name', document.getElementById('name').value);
     form.append('email', document.getElementById('email').value);
-    form.append('photo', document.getElementById('photo').files[0]);
-    console.log(form);
+    form.append('photo', document.getElementById('photo').files[0]); // console.log(form);
+
     (0, _updateSettings.updateSettings)(form, 'data');
   });
 }
@@ -9464,7 +9464,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50929" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51523" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

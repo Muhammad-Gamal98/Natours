@@ -4,10 +4,12 @@ const bookingSchema = mongoose.Schema(
   {
     tour: {
       type: mongoose.Schema.ObjectId,
+      ref: 'Tour',
       required: [true, 'Booking must belong to a tour']
     },
     user: {
       type: mongoose.Schema.ObjectId,
+      ref: 'User',
       required: [true, 'Booking must belong to a user']
     },
     price: {
@@ -20,13 +22,20 @@ const bookingSchema = mongoose.Schema(
     }
   },
 
-  { timestamps: true }
+  {
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+  }
 );
 bookingSchema.pre(/^find/, function(next) {
-  this.populate('user').populate({
-    path: 'tour',
-    select: 'name'
-  });
+  this.populate('user').populate('tour');
+  next();
+});
+bookingSchema.virtual('tours', {
+  ref: 'Tour',
+  foreignField: '_id',
+  localField: 'tour'
 });
 const booking = mongoose.model('booking', bookingSchema);
 module.exports = booking;

@@ -1,4 +1,6 @@
 const Tour = require('../models/tourModel');
+const Booking = require('../models/bookingModel');
+
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -18,7 +20,6 @@ exports.getTour = catchAsync(async (req, res, next) => {
   if (!tour) {
     return next(new AppError('There is no tour with that name.', 404));
   }
-
   //2) build template
   //3)Render template using data from 1)
   res.status(200).render('tour', {
@@ -27,8 +28,16 @@ exports.getTour = catchAsync(async (req, res, next) => {
   });
 });
 exports.getLoginForm = (req, res) => {
-  res.status(200).render('login', {
-    title: 'login into your account'
+  if (!res.locals.user) {
+    return res.status(200).render('login', {
+      title: 'login into your account'
+    });
+  }
+  res.redirect(`${req.protocol}://${req.get('host')}`);
+};
+exports.getSignupForm = (req, res) => {
+  res.status(200).render('Signup', {
+    title: 'Sign UP'
   });
 };
 exports.getAccount = (req, res) => {
@@ -39,3 +48,13 @@ exports.getAccount = (req, res) => {
 exports.updateUserData = (req, res) => {
   console.log('updating user', req.body);
 };
+exports.getMyTours = catchAsync(async (req, res, next) => {
+  const bookings = await Booking.find({ user: req.user.id });
+  // const toursIDs = bookings.map(el => el.tour);
+  // const tours = await Tour.find({_id: {$in : toursIDs}})
+  const tours = bookings.map(el => el.tour);
+  res.status(200).render('overview', {
+    title: 'My Booking Tours',
+    tours
+  });
+});
