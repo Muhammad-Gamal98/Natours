@@ -46,7 +46,7 @@ exports.getAccount = (req, res) => {
   });
 };
 exports.updateUserData = (req, res) => {
-  console.log('updating user', req.body);
+  // console.log('updating user', req.body);
 };
 exports.getMyTours = catchAsync(async (req, res, next) => {
   const bookings = await Booking.find({ user: req.user.id });
