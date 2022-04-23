@@ -8,6 +8,7 @@ const cors = require('cors');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 const cookieParser = require('cookie-parser');
+const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
@@ -82,6 +83,7 @@ app.use(
     whitelist: ['duration', 'ratingQuanity', 'price']
   })
 );
+app.use(compression());
 // app.use((req, res, next) => {
 //   res.setHeader(
 //     'Content-Security-Policy',
