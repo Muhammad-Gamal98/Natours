@@ -12,6 +12,7 @@ const compression = require('compression');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controller/errorController');
+const bookingController = require('./controller/bookingController');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
@@ -65,6 +66,12 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many requist from this IP, Please try again in an hour!'
 });
+
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 
 app.use(express.json());
 app.use(cookieParser());
