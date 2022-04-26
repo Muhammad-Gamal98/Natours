@@ -67,14 +67,19 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many requist from this IP, Please try again in an hour!'
 });
-
+app.use((req, res, next) => {
+  if (req.originalUrl === '/webhook') {
+    next();
+  } else {
+    express.json()(req, res, next);
+  }
+});
 app.post(
   '/webhook-checkout',
-  bodyParser.raw({ type: 'application/json' }),
+  express.raw({ type: 'application/json' }),
   bookingController.webhookCheckout
 );
 
-app.use(express.json());
 app.use(cookieParser());
 app.use((req, res, next) => {
   req.requistTime = new Date().toISOString();
