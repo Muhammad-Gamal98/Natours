@@ -8,7 +8,6 @@ const cors = require('cors');
 const hpp = require('hpp');
 const mongoSanitize = require('express-mongo-sanitize');
 const cookieParser = require('cookie-parser');
-const bodyParser = require('body-parser');
 const compression = require('compression');
 
 const AppError = require('./utils/appError');
@@ -67,19 +66,14 @@ const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
   message: 'Too many requist from this IP, Please try again in an hour!'
 });
-app.use((req, res, next) => {
-  if (req.originalUrl === '/webhook-checkout') {
-    next();
-  } else {
-    express.json()(req, res, next);
-  }
-});
+
 app.post(
   '/webhook-checkout',
-  express.raw({ type: '*/*' }),
+  express.raw({ type: 'application/json' }),
   bookingController.webhookCheckout
 );
 
+app.use(express.json());
 app.use(cookieParser());
 app.use((req, res, next) => {
   req.requistTime = new Date().toISOString();
