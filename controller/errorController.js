@@ -83,7 +83,7 @@ module.exports = (err, req, res, next) => {
   err.status = err.status || 'error';
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, req, res);
-  } else if (process.env.NODE_ENV === 'production ') {
+  } else if (process.env.NODE_ENV === 'production') {
     // console.log('error in prod');
     // let error = { ...err };
     // let error = JSON.parse(JSON.stringify(err));
